@@ -27,8 +27,6 @@ t=0
 
 
 def main():
-  #book=excel.Workbook()
-  #main_sheet=book.active
   global Timex
   global Tempy
   global humiy
