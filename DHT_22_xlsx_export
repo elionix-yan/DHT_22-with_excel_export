@@ -1,11 +1,11 @@
-""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 Raspberry is necessary for this operation.
 
 Cable connection:
 + to 5V
 data to TXD0
 Ground to GND
-""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 
 import Adafruit_DHT
 import time
