@@ -1,0 +1,94 @@
+import Adafruit_DHT
+import time
+from datetime import datetime
+import matplotlib.pyplot as plt
+import pandas as pd
+
+save_route='/home/yan/Desktop/THLog.xlsx'
+
+
+DHT_SENSOR=Adafruit_DHT.DHT22
+DHT_PIN=14
+
+Ntime=[]     
+Timex=[]
+Tempy=[]
+humiy=[]         
+t=0
+
+
+def main():
+  #book=excel.Workbook()
+  #main_sheet=book.active
+  global Timex
+  global Tempy
+  global humiy
+  global t
+  global Ntime
+  StartTime = datetime.now()
+  StartTime = StartTime.strftime('%D:%H:%M:%S')
+  Start_time=StartTime.split(":")
+  sdate=Start_time[0]
+  sDate=sdate.split("/")
+  sDATE=int(sDate[1])
+  sh=int(Start_time[1])
+  sm=int(Start_time[2])
+  ss=int(Start_time[3])
+  
+  while True:
+    
+    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+    if humidity is not None and temperature is not None:
+        Now=datetime.now()
+        Nowtime=Now.strftime('%D:%H:%M:%S')
+        now_time=Nowtime.split(":")
+        date=now_time[0]
+        nDate=date.split("/")
+        nDATE=int(nDate[1])
+        nh=int(now_time[1])
+        nm=int(now_time[2])
+        ns=int(now_time[3])
+        PassTime=(nDATE-sDATE)*24+(nh-sh)+(nm-sm)/60+(ns-ss)/3600
+        
+        print(Nowtime+"  "+"Temp={0:0.2f}*C  Humidity={1:0.2f}%".format(temperature,humidity))
+        data="{0:0.2f} {1:0.2f}".format(temperature,humidity)
+        data1=data.split(" ")
+        temperature=float(data1[0])
+        humidity=float(data1[1])
+        if humidity < 101:
+            Ntime.append(Nowtime)
+            Timex.append(PassTime)
+            Tempy.append(temperature)
+            humiy.append(humidity)
+            time.sleep(60)
+        
+    else:
+        print("Fail to get data")
+        
+  
+if __name__ == '__main__':
+    
+    try:
+        main()
+    except KeyboardInterrupt:
+        
+        plt.plot(Timex,Tempy)
+        plt.title('temperature')
+        plt.xlabel('time(hr)')
+        plt.ylabel('temperature')
+        plt.grid(True)
+        plt.show()
+        
+        fig2=plt.plot(Timex,humiy)
+        plt.title('humidity')
+        plt.xlabel('time(hr)')
+        plt.ylabel('humidity')
+        plt.grid(True)
+        plt.show()
+        
+        array=[Ntime,
+               Timex,
+               Tempy,
+               humiy]
+        df=pd.DataFrame(array).T
+        df.to_excel(excel_writer=save_route)
