@@ -13,7 +13,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
 
-save_route='/home/yan/Desktop/THLog.xlsx'
+save_route='The saving route you want' #example: /home/yan/Desktop/THLog.xlsx
 
 
 DHT_SENSOR=Adafruit_DHT.DHT22
