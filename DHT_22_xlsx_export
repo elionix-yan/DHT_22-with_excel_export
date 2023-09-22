@@ -13,7 +13,13 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
 
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+Change here for where file to save
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 save_route='The saving route you want' #example: /home/yan/Desktop/THLog.xlsx
+
 
 
 DHT_SENSOR=Adafruit_DHT.DHT22
@@ -62,7 +68,11 @@ def main():
         data1=data.split(" ")
         temperature=float(data1[0])
         humidity=float(data1[1])
-        if humidity < 101:
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+Define what is normal data here
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+        if humidity < 101:   #change here for defining waht is good data to be saved
             Ntime.append(Nowtime)
             Timex.append(PassTime)
             Tempy.append(temperature)
@@ -78,21 +88,7 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        
-        plt.plot(Timex,Tempy)
-        plt.title('temperature')
-        plt.xlabel('time(hr)')
-        plt.ylabel('temperature')
-        plt.grid(True)
-        plt.show()
-        
-        fig2=plt.plot(Timex,humiy)
-        plt.title('humidity')
-        plt.xlabel('time(hr)')
-        plt.ylabel('humidity')
-        plt.grid(True)
-        plt.show()
-        
+              
         array=[Ntime,
                Timex,
                Tempy,
